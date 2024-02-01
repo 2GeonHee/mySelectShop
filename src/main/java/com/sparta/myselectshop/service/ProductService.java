@@ -4,6 +4,7 @@ import com.sparta.myselectshop.dto.ProductMypriceRequestDto;
 import com.sparta.myselectshop.dto.ProductRequestDto;
 import com.sparta.myselectshop.dto.ProductResponseDto;
 import com.sparta.myselectshop.entity.Product;
+import com.sparta.myselectshop.naver.dto.ItemDto;
 import com.sparta.myselectshop.repository.ProductRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -28,7 +29,7 @@ public class ProductService {
     public ProductResponseDto updateProduct(Long id, ProductMypriceRequestDto requestdto) {
         int myprice = requestdto.getMyprice();
         if (myprice < MIN_MY_PRICE) {
-            throw new IllegalArgumentException("유효하지 않은 가격입니다."+MIN_MY_PRICE+"원 이상으로 설정해주세요.");
+            throw new IllegalArgumentException("유효하지 않은 가격입니다." + MIN_MY_PRICE + "원 이상으로 설정해주세요.");
         }
         Product product = repository.findById(id).orElseThrow(() ->
                 new NullPointerException("해당 상품을 찾을 수 없습니다.")
@@ -44,5 +45,13 @@ public class ProductService {
             responseDtoList.add(new ProductResponseDto(product));
         }
         return responseDtoList;
+    }
+
+    @Transactional
+    public void updateBySearch(Long id, ItemDto itemDto) {
+        Product product = repository.findById(id).orElseThrow(() ->
+                new NullPointerException("해당 상품은 존재하지 않습니다.")
+        );
+        product.updateByItemDto(itemDto);
     }
 }
