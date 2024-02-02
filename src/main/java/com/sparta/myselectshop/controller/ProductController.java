@@ -42,7 +42,7 @@ public class ProductController {
     }
 
     // 관심상품에 폴더 추가
-    @PostMapping("/products/{productId}/forlder")
+    @PostMapping("/products/{productId}/folder")
     public void addFolder(@PathVariable Long productId,
                           @RequestParam Long folderId,
                           @AuthenticationPrincipal UserDetailsImpl userDetails) {
