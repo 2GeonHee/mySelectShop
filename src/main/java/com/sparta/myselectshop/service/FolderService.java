@@ -13,7 +13,8 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FolderService {
     private final FolderRepository folderRepository;
-    public void addFolder(List<String> folderNames, User user) {
+
+    public void addFolders(List<String> folderNames, User user) {
 
         List<Folder> existFolderList = folderRepository.findAllByUserAndNameIn(user, folderNames);
 
@@ -24,12 +25,11 @@ public class FolderService {
                 Folder folder = new Folder(folderName, user);
                 folderList.add(folder);
             } else {
-                throw new IllegalArgumentException("폴더명이 중복되없습니다.");
+                throw new IllegalArgumentException("폴더명이 중복되었습니다.");
             }
         }
         folderRepository.saveAll(folderList);
     }
-
 
     public List<FolderResponseDto> getFolders(User user) {
         List<Folder> folderList = folderRepository.findAllByUser(user);

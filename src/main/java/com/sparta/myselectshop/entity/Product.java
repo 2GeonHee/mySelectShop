@@ -43,6 +43,7 @@ public class Product extends Timestamped {
 
     @OneToMany(mappedBy = "product")
     private List<ProductFolder> productFolderList = new ArrayList<>();
+
     public Product(ProductRequestDto requestDto, User user) {
         this.title = requestDto.getTitle();
         this.image = requestDto.getImage();
@@ -51,8 +52,8 @@ public class Product extends Timestamped {
         this.user = user;
     }
 
-    public void update(ProductMypriceRequestDto requestdto) {
-        this.myprice = requestdto.getMyprice();
+    public void update(ProductMypriceRequestDto requestDto) {
+        this.myprice = requestDto.getMyprice();
     }
 
     public void updateByItemDto(ItemDto itemDto) {
